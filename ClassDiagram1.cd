@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Breakthrough.Breakthrough">
+    <Position X="18.5" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AoBAgAAIACQgAAgBCIAgEokgAAABAEAAAABAAAMBAAE=</HashCode>
+      <FileName>Breakthrough.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Breakthrough.Card">
+    <Position X="9.25" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAIAAgAAgAIgAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Card.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Breakthrough.CardCollection">
+    <Position X="13.75" Y="3.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAEAIAAAAAAABAQAAAAAAAQIAACAAAACAAAAAAAgFAA=</HashCode>
+      <FileName>CardCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Breakthrough.Challenge" Collapsed="true">
+    <Position X="18.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAKAAAABAAAAAAABAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Challenge.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Breakthrough.DifficultyCard">
+    <Position X="10.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIgAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DifficultyCard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Breakthrough.Lock" Collapsed="true">
+    <Position X="15" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAIIAAAACAAAIAAAAAAAAACAAAAEBAAAQAAAAA=</HashCode>
+      <FileName>Lock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Breakthrough.Program" Collapsed="true">
+    <Position X="16.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Breakthrough.ToolCard">
+    <Position X="12" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAQAAAAAAAAAAAAAAAgAAAAAEAA=</HashCode>
+      <FileName>ToolCard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
