@@ -343,7 +343,7 @@ namespace Breakthrough
                 Console.Write("Enter a number between 1 and 5 to specify card to use:> ");
                 Choice = Console.ReadLine();
             }
-            while (!int.TryParse(Choice, out Value));
+            while (!int.TryParse(Choice, out Value) || Value > 5 || Value < 1);
             return Value;
         }
 
