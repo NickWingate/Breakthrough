@@ -48,6 +48,7 @@ namespace Breakthrough
                     {
                         Console.WriteLine();
                         Console.WriteLine("Current score: " + Score);
+                        Console.WriteLine($"Cards Left {Deck.GetNumberOfCards()}");
                         Console.WriteLine(CurrentLock.GetLockDetails());
                         Console.WriteLine(Sequence.GetCardDisplay());
                         Console.WriteLine(Hand.GetCardDisplay());
@@ -346,7 +347,7 @@ namespace Breakthrough
             while (!int.TryParse(Choice, out Value) || Value > 5 || Value < 1);
             return Value;
         }
-
+        
         private string GetDiscardOrPlayChoice()
         {
             string Choice;
