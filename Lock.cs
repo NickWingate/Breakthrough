@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Breakthrough
 {
@@ -87,6 +88,16 @@ namespace Breakthrough
         public virtual int GetNumberOfChallenges()
         {
             return Challenges.Count;
+        }
+
+        public string GetChallengesAsString()
+        {
+            return string.Join(";", Challenges.Select(c => c.ToString()));
+        }
+        
+        public string GetChallengeStatusAsString()
+        {
+            return string.Join(";", Challenges.Select(c => c.GetMet() ? "Y" : "N"));
         }
     }
 }

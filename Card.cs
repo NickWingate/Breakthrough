@@ -33,16 +33,14 @@ namespace Breakthrough
             return CardNumber;
         }
 
-        public virtual string GetDescription()
+        public string GetDescription()
         {
-            if (CardNumber < 10)
-            {
-                return " " + CardNumber.ToString();
-            }
-            else
-            {
-                return CardNumber.ToString();
-            }
+            return GetCardDetails() + " " + CardNumber.ToString();
+        }
+
+        public virtual string GetCardDetails()
+        {
+            return string.Empty;
         }
     }
 }

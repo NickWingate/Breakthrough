@@ -36,5 +36,10 @@ namespace Breakthrough
         {
             Condition = newCondition;
         }
+
+        public override string ToString()
+        {
+            return string.Join(',', Condition);
+        }
     }
 }

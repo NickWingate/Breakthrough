@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Breakthrough
 {
@@ -28,9 +29,9 @@ namespace Breakthrough
             return Cards[x].GetCardNumber();
         }
 
-        public string GetCardDescriptionAt(int x)
+        public string GetCardDetailsAt(int x)
         {
-            return Cards[x].GetDescription();
+            return Cards[x].GetCardDetails();
         }
 
         public void AddCard(Card c)
@@ -112,7 +113,7 @@ namespace Breakthrough
             int Pos = 0;
             while (!Complete)
             {
-                CardDisplay += "| " + Cards[Pos].GetDescription() + " ";
+                CardDisplay += "| " + Cards[Pos].GetCardDetails() + " ";
                 Pos++;
                 if (Pos % CardsPerLine == 0)
                 {
@@ -133,6 +134,11 @@ namespace Breakthrough
                 CardDisplay += LineOfDashes + Environment.NewLine;
             }
             return CardDisplay;
+        }
+
+        public override string ToString()
+        {
+            return String.Join(',', Cards.Select(c => c.GetDescription()));
         }
     }
 }

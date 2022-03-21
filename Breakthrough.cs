@@ -73,6 +73,9 @@ namespace Breakthrough
                                         PlayCardToSequence(CardChoice);
                                     break;
                                 }
+                            case "S":
+                                SaveGame(GetFileName());
+                                break;
                         }
                         if (CurrentLock.GetLockSolved())
                         {
@@ -85,6 +88,30 @@ namespace Breakthrough
             }
             else
                 Console.WriteLine("No locks in file.");
+        }
+
+        private void SaveGame(string fileName)
+        {
+            if (fileName.EndsWith(".txt"))
+            {
+                fileName += ".txt";
+            }
+            using (StreamWriter sw = new StreamWriter(fileName))
+            {
+                sw.WriteLine(Score);
+                sw.WriteLine(CurrentLock.GetChallengesAsString());
+                sw.WriteLine(CurrentLock.GetChallengeStatusAsString());
+                sw.WriteLine(Hand.ToString());
+                sw.WriteLine(Sequence.ToString());
+                sw.WriteLine(Discard.ToString());
+                sw.WriteLine(Deck.ToString());
+            }
+        }
+
+        private string GetFileName()
+        {
+            Console.Write("Save game as: ");
+            return Console.ReadLine();
         }
 
         private void ProcessLockSolved()
@@ -115,7 +142,8 @@ namespace Breakthrough
         private void SetupGame()
         {
             string Choice;
-            Console.Write("Enter L to load a game from a file, anything else to play a new game:> ");
+            Console.Write("Enter L to load a game from a file\n" +
+                          "Enter anything else to play a new game:> ");
             Choice = Console.ReadLine().ToUpper();
             if (Choice == "L")
             {
@@ -142,7 +170,7 @@ namespace Breakthrough
         {
             if (Sequence.GetNumberOfCards() > 0)
             {
-                if (Hand.GetCardDescriptionAt(cardChoice - 1)[0] != Sequence.GetCardDescriptionAt(Sequence.GetNumberOfCards() - 1)[0])
+                if (Hand.GetCardDetailsAt(cardChoice - 1)[0] != Sequence.GetCardDetailsAt(Sequence.GetNumberOfCards() - 1)[0])
                 {
                     Score += MoveCard(Hand, Sequence, Hand.GetCardNumberAt(cardChoice - 1));
                     GetCardFromDeck(cardChoice);
@@ -171,7 +199,7 @@ namespace Breakthrough
                 {
                     SequenceAsString = ", " + SequenceAsString;
                 }
-                SequenceAsString = Sequence.GetCardDescriptionAt(Count) + SequenceAsString;
+                SequenceAsString = Sequence.GetCardDetailsAt(Count) + SequenceAsString;
                 if (CurrentLock.CheckIfConditionMet(SequenceAsString))
                 {
                     return true;
@@ -211,17 +239,17 @@ namespace Breakthrough
             }
         }
 
-        private void SetupLock(string line1, string line2)
+        private void SetupLock(string challenges, string challengeStatus)
         {
             List<string> SplitLine;
-            SplitLine = line1.Split(';').ToList();
+            SplitLine = challenges.Split(';').ToList();
             foreach (var Item in SplitLine)
             {
                 List<string> Conditions;
                 Conditions = Item.Split(',').ToList();
                 CurrentLock.AddChallenge(Conditions);
             }
-            SplitLine = line2.Split(';').ToList();
+            SplitLine = challengeStatus.Split(';').ToList();
             for (int Count = 0; Count < SplitLine.Count; Count++)
             {
                 if (SplitLine[Count] == "Y")
@@ -303,7 +331,7 @@ namespace Breakthrough
         {
             if (Deck.GetNumberOfCards() > 0)
             {
-                if (Deck.GetCardDescriptionAt(0) == "Dif")
+                if (Deck.GetCardDetailsAt(0) == "Dif")
                 {
                     Card CurrentCard = Deck.RemoveCard(Deck.GetCardNumberAt(0));
                     Console.WriteLine();
@@ -319,7 +347,7 @@ namespace Breakthrough
             }
             while (Hand.GetNumberOfCards() < 5 && Deck.GetNumberOfCards() > 0)
             {
-                if (Deck.GetCardDescriptionAt(0) == "Dif")
+                if (Deck.GetCardDetailsAt(0) == "Dif")
                 {
                     MoveCard(Deck, Discard, Deck.GetCardNumberAt(0));
                     Console.WriteLine("A difficulty card was discarded from the deck when refilling the hand.");
@@ -359,7 +387,7 @@ namespace Breakthrough
         private string GetChoice()
         {
             Console.WriteLine();
-            Console.Write("(D)iscard inspect, (U)se card:> ");
+            Console.Write("(D)iscard inspect, (U)se card, (S)ave game:> ");
             string Choice = Console.ReadLine().ToUpper();
             return Choice;
         }

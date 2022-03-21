@@ -47,7 +47,7 @@ namespace Breakthrough
             }
         }
 
-        public override string GetDescription()
+        public override string GetCardDetails()
         {
             return ToolType + " " + Kit;
         }

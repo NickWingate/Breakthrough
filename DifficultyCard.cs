@@ -21,7 +21,7 @@ namespace Breakthrough
             CardNumber = cardNo;
         }
 
-        public override string GetDescription()
+        public override string GetCardDetails()
         {
             return CardType;
         }
@@ -48,7 +48,7 @@ namespace Breakthrough
                     {
                         ChoiceAsInteger -= 1;
                     }
-                    if (hand.GetCardDescriptionAt(ChoiceAsInteger)[0] == 'K')
+                    if (hand.GetCardDetailsAt(ChoiceAsInteger)[0] == 'K')
                     {
                         Card CardToMove = hand.RemoveCard(hand.GetCardNumberAt(ChoiceAsInteger));
                         discard.AddCard(CardToMove);
