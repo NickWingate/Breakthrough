@@ -76,6 +76,15 @@ namespace Breakthrough
                             case "S":
                                 SaveGame(GetFileName());
                                 break;
+                            case "P":
+                                if (!CurrentLock.CanPeek)
+                                {
+                                    Console.WriteLine("You have used your peek ability for this lock already");
+                                    break;
+                                }
+
+                                PeekDeck(3);
+                                break;
                         }
                         if (CurrentLock.GetLockSolved())
                         {
@@ -90,9 +99,26 @@ namespace Breakthrough
                 Console.WriteLine("No locks in file.");
         }
 
+        private void PeekDeck(int numberOfCards)
+        {
+            var peekCollection = new CardCollection("Peek");
+            CurrentLock.CanPeek = false;
+            for (int i = 0; i < numberOfCards; i++)
+            {
+                if (i > Deck.GetNumberOfCards())
+                {
+                    break;
+                }
+                peekCollection.AddCard(Deck[i]);
+            }
+
+            Console.WriteLine(peekCollection.GetCardDisplay());
+            Console.ReadKey();
+        }
+
         private void SaveGame(string fileName)
         {
-            if (fileName.EndsWith(".txt"))
+            if (!fileName.EndsWith(".txt"))
             {
                 fileName += ".txt";
             }
@@ -105,13 +131,20 @@ namespace Breakthrough
                 sw.WriteLine(Sequence.ToString());
                 sw.WriteLine(Discard.ToString());
                 sw.WriteLine(Deck.ToString());
+                sw.WriteLine(CurrentLock.CanPeek);
             }
         }
 
         private string GetFileName()
         {
-            Console.Write("Save game as: ");
-            return Console.ReadLine();
+            Console.Write("File name: ");
+            var fileName = Console.ReadLine();
+            if (!fileName.EndsWith(".txt"))
+            {
+                fileName += ".txt";
+            }
+
+            return fileName;
         }
 
         private void ProcessLockSolved()
@@ -147,7 +180,8 @@ namespace Breakthrough
             Choice = Console.ReadLine().ToUpper();
             if (Choice == "L")
             {
-                if (!LoadGame("game1.txt"))
+                
+                if (!LoadGame(GetFileName()))
                 {
                     GameOver = true;
                 }
@@ -287,6 +321,7 @@ namespace Breakthrough
                     SetupCardCollectionFromGameFile(LineFromFile, Discard);
                     LineFromFile = MyStream.ReadLine();
                     SetupCardCollectionFromGameFile(LineFromFile, Deck);
+                    CurrentLock.CanPeek = MyStream.ReadLine() == "True";
                 }
                 return true;
             }
@@ -394,7 +429,12 @@ namespace Breakthrough
         private string GetChoice()
         {
             Console.WriteLine();
-            Console.Write("(D)iscard inspect, (U)se card, (S)ave game:> ");
+            var choices = "(D)iscard inspect, (U)se card, (S)ave game";
+            if (CurrentLock.CanPeek)
+            {
+                choices += ", (P)eek";
+            }
+            Console.Write($"{choices}:> " );
             string Choice = Console.ReadLine().ToUpper();
             return Choice;
         }

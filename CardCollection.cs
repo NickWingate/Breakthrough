@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Breakthrough
 {
@@ -33,6 +34,8 @@ namespace Breakthrough
         {
             return Cards[x].GetCardDetails();
         }
+
+        public Card this[int index] => Cards[index]; 
 
         public void AddCard(Card c)
         {

@@ -12,6 +12,7 @@ namespace Breakthrough
     class Lock
     {
         protected List<Challenge> Challenges = new List<Challenge>();
+        public bool CanPeek { get; set; } = true;
 
         public virtual void AddChallenge(List<string> condition)
         {
