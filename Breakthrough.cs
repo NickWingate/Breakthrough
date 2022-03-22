@@ -170,11 +170,18 @@ namespace Breakthrough
         {
             if (Sequence.GetNumberOfCards() > 0)
             {
-                if (Hand.GetCardDetailsAt(cardChoice - 1)[0] != Sequence.GetCardDetailsAt(Sequence.GetNumberOfCards() - 1)[0])
+                var userCardDetails = Hand.GetCardDetailsAt(cardChoice - 1);
+                var lastPlayedCardDetails = Sequence.GetCardDetailsAt(Sequence.GetNumberOfCards() - 1);
+                if (userCardDetails[0] == lastPlayedCardDetails[0])
                 {
-                    Score += MoveCard(Hand, Sequence, Hand.GetCardNumberAt(cardChoice - 1));
-                    GetCardFromDeck(cardChoice);
+                    Console.WriteLine("Invalid Card Type: must be different than last played card\n" +
+                    $"Last Card was {lastPlayedCardDetails}, you tried to play {userCardDetails}\n" +
+                    "Any key to continue");
+                    Console.ReadKey();
+                    return;
                 }
+                Score += MoveCard(Hand, Sequence, Hand.GetCardNumberAt(cardChoice - 1));
+                GetCardFromDeck(cardChoice);
             }
             else
             {
@@ -429,24 +436,24 @@ namespace Breakthrough
             }
         }
 
-        private int MoveCard(CardCollection fromCollection, CardCollection toCollection, int cardNumber)
+        private int MoveCard(CardCollection source, CardCollection destination, int cardNumber)
         {
             int Score = 0;
-            if (fromCollection.GetName() == "HAND" && toCollection.GetName() == "SEQUENCE")
+            if (source.GetName() == "HAND" && destination.GetName() == "SEQUENCE")
             {
-                Card CardToMove = fromCollection.RemoveCard(cardNumber);
+                Card CardToMove = source.RemoveCard(cardNumber);
                 if (CardToMove != null)
                 {
-                    toCollection.AddCard(CardToMove);
+                    destination.AddCard(CardToMove);
                     Score = CardToMove.GetScore();
                 }
             }
             else
             {
-                Card CardToMove = fromCollection.RemoveCard(cardNumber);
+                Card CardToMove = source.RemoveCard(cardNumber);
                 if (CardToMove != null)
                 {
-                    toCollection.AddCard(CardToMove);
+                    destination.AddCard(CardToMove);
                 }
             }
             return Score;
