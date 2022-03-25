@@ -35,17 +35,22 @@ namespace Breakthrough
         public virtual string GetLockDetails()
         {
             string LockDetails = Environment.NewLine + "CURRENT LOCK" + Environment.NewLine + "------------" + Environment.NewLine;
-            foreach (var C in Challenges)
+            foreach (var challenge in Challenges)
             {
-                if (C.GetMet())
+                switch (challenge.Status)
                 {
-                    LockDetails += "Challenge met: ";
+                    case ChallengeStatus.Solved:
+                        LockDetails += "Challenge met: ";
+                        break;
+                    case ChallengeStatus.PartiallySolved:
+                        LockDetails += "Partially met: ";
+                        break;
+                    default:
+                        LockDetails += "Not met:       ";
+                        break;
                 }
-                else
-                {
-                    LockDetails += "Not met:       ";
-                }
-                LockDetails += ConvertConditionToString(C.GetCondition()) + Environment.NewLine;
+
+                LockDetails += ConvertConditionToString(challenge.GetCondition()) + Environment.NewLine;
             }
             LockDetails += Environment.NewLine;
             return LockDetails;
@@ -55,7 +60,7 @@ namespace Breakthrough
         {
             foreach (var C in Challenges)
             {
-                if (!C.GetMet())
+                if (!C.IsSolved)
                 {
                     return false;
                 }
@@ -65,12 +70,18 @@ namespace Breakthrough
 
         public virtual bool CheckIfConditionMet(string sequence)
         {
-            foreach (var C in Challenges)
+            foreach (var challenge in Challenges)
             {
-                if (!C.GetMet() && sequence == ConvertConditionToString(C.GetCondition()))
+                var conditionString = ConvertConditionToString(challenge.GetCondition());
+                if (!challenge.IsSolved && sequence == conditionString)
                 {
-                    C.SetMet(true);
+                    challenge.Status = ChallengeStatus.Solved;
                     return true;
+                }
+                else if (!challenge.IsSolved && 
+                    Challenge.IsPartiallySolved(conditionString, sequence))
+                {
+                    challenge.Status = ChallengeStatus.PartiallySolved;
                 }
             }
             return false;
@@ -78,12 +89,13 @@ namespace Breakthrough
 
         public virtual void SetChallengeMet(int pos, bool value)
         {
-            Challenges[pos].SetMet(value);
+            Challenges[pos].Status = value ?
+                ChallengeStatus.Solved : ChallengeStatus.Unsolved;
         }
 
         public virtual bool GetChallengeMet(int pos)
         {
-            return Challenges[pos].GetMet();
+            return Challenges[pos].IsSolved;
         }
 
         public virtual int GetNumberOfChallenges()
@@ -98,7 +110,7 @@ namespace Breakthrough
         
         public string GetChallengeStatusAsString()
         {
-            return string.Join(";", Challenges.Select(c => c.GetMet() ? "Y" : "N"));
+            return string.Join(";", Challenges.Select(c => c.IsSolved ? "Y" : "N"));
         }
     }
 }

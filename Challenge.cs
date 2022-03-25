@@ -7,29 +7,20 @@ using System.Collections.Generic;
 
 namespace Breakthrough
 {
-    class Challenge
+    public class Challenge
     {
         protected List<string> Condition;
-        protected bool Met;
+        public ChallengeStatus Status { get; set; }
+        public bool IsSolved => Status == ChallengeStatus.Solved;
 
         public Challenge()
         {
-            Met = false;
-        }
-
-        public bool GetMet()
-        {
-            return Met;
+            Status = ChallengeStatus.Unsolved;
         }
 
         public List<string> GetCondition()
         {
             return Condition;
-        }
-
-        public void SetMet(bool newValue)
-        {
-            Met = newValue;
         }
 
         public void SetCondition(List<string> newCondition)
@@ -40,6 +31,19 @@ namespace Breakthrough
         public override string ToString()
         {
             return string.Join(',', Condition);
+        }
+
+        public static bool IsPartiallySolved(string conditions, string sequence)
+        {
+            var partiallySolved = false;
+            var i = 2;
+            while (!partiallySolved && i < conditions.Length)
+            {
+                // compare start of condition and end of sequence
+                partiallySolved = sequence.EndsWith(conditions.Substring(0, i));
+                i += 4;
+            }
+            return partiallySolved;
         }
     }
 }
