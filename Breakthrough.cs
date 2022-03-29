@@ -155,6 +155,7 @@ namespace Breakthrough
             {
                 MoveCard(Discard, Deck, Discard.GetCardNumberAt(0));
             }
+            Locks.Remove(CurrentLock);
             Deck.Shuffle();
             CurrentLock = GetRandomLock();
         }
