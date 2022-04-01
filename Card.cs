@@ -5,7 +5,7 @@
 
 namespace Breakthrough
 {
-    class Card
+    abstract class Card
     {
         protected int CardNumber, Score;
         protected static int NextCardNumber = 1;
@@ -22,11 +22,9 @@ namespace Breakthrough
             return Score;
         }
 
-        public virtual void Process(CardCollection deck, CardCollection discard,
+        public abstract void Process(CardCollection deck, CardCollection discard,
             CardCollection hand, CardCollection sequence, Lock currentLock,
-            string choice, int cardChoice)
-        {
-        }
+            string choice, int cardChoice);
 
         public virtual int GetCardNumber()
         {

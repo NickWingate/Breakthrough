@@ -196,9 +196,19 @@ namespace Breakthrough
                     MoveCard(Deck, Hand, Deck.GetCardNumberAt(0));
                 }
                 AddDifficultyCardsToDeck();
+                var random = new Random();
+                if (random.Next(100) <= 25)
+                {
+                    AddGeniusCard();
+                }
                 Deck.Shuffle();
                 CurrentLock = GetRandomLock();
             }
+        }
+
+        private void AddGeniusCard()
+        {
+            Deck.AddCard
         }
 
         private void PlayCardToSequence(int cardChoice)
