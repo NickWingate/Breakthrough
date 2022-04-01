@@ -70,12 +70,19 @@ namespace Breakthrough
 
         public virtual bool CheckIfConditionMet(string sequence)
         {
+            var anySolvedChallenges = false;
             foreach (var challenge in Challenges)
             {
                 var conditionString = ConvertConditionToString(challenge.GetCondition());
                 if (!challenge.IsSolved && sequence == conditionString)
                 {
                     challenge.Status = ChallengeStatus.Solved;
+                    anySolvedChallenges = true;
+                }
+                else if (!challenge.IsSolved && 
+                    Challenge.IsPartiallySolved(conditionString, sequence))
+                {
+                    C.SetMet(true);
                     return true;
                 }
                 else if (!challenge.IsSolved && 
@@ -84,7 +91,7 @@ namespace Breakthrough
                     challenge.Status = ChallengeStatus.PartiallySolved;
                 }
             }
-            return false;
+            return anySolvedChallenges;
         }
 
         public virtual void SetChallengeMet(int pos, bool value)

@@ -36,12 +36,12 @@ namespace Breakthrough
         public static bool IsPartiallySolved(string conditions, string sequence)
         {
             var partiallySolved = false;
-            var i = 2;
+            var i = 3;
             while (!partiallySolved && i < conditions.Length)
             {
                 // compare start of condition and end of sequence
                 partiallySolved = sequence.EndsWith(conditions.Substring(0, i));
-                i += 4;
+                i += 5;
             }
             return partiallySolved;
         }
